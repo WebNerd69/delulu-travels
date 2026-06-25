@@ -9,9 +9,18 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@langchain/core": "^1.2.0",
+    "@langchain/google-genai": "^2.2.0",
+    "@langchain/mistralai": "^1.2.0",
+    "@tavily/core": "^0.7.6",
+    "langchain": "^1.5.0",
+    "mongodb": "^7.3.0",
+    "mongoose": "^9.7.2",
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "snoowrap": "^1.23.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
