@@ -1,5 +1,6 @@
 import { createAgent } from "langchain";
-import {z} from "zod"
+import { z } from "zod";
+import verifyTripFeasibility from "../tools/verifyTripFeasibility";
 
 const specificInstructions = `You are TripMate, an AI Travel Consultant.
 
@@ -63,12 +64,16 @@ When all details are available, create a travel brief:
   special_requirements
 }
 
-Only then invoke the Mega Agent.`
+Only then invoke the Mega Agent.`;
 
 const consultorAgent = createAgent({
-     model : "google-genai:gemini-2.5-flash-lite",
-     tools:[],
-     systemPrompt : specificInstructions
-})
+    model: "google-genai:gemini-2.5-flash-lite",
+    tools: [verifyTripFeasibility],
+    systemPrompt: specificInstructions,
+});
 
-export default consultorAgent
+const invokeConsultorAgent = async (prompt: string) => {
+    console.log(prompt);
+};
+
+export default invokeConsultorAgent;

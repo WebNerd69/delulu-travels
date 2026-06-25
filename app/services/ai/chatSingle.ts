@@ -1,4 +1,4 @@
-import { chatGoogleModel, chatMistralModel } from "./models"
+import { chatGoogleModel, chatMistralModelSmall } from "./models"
 
 const googleChatSingle =async({msg}:{msg:string})=>{
      const response = await chatGoogleModel.invoke(msg)
@@ -6,7 +6,7 @@ const googleChatSingle =async({msg}:{msg:string})=>{
 }
 
 const mistralChatSingle =async({msg}:{msg:string})=>{
-     const response = await chatMistralModel.invoke(msg)
+     const response = await chatMistralModelSmall.invoke(msg)
      return response
 }
 

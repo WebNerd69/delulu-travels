@@ -5,9 +5,14 @@ const chatGoogleModel = new ChatGoogleGenerativeAI({
     model: "gemini-2.5-flash-lite",
 });
 
-const chatMistralModel = new ChatMistralAI({
+const chatMistralModelSmall = new ChatMistralAI({
     model: "mistral-small-latest",
     temperature: 0,
 });
 
-export {chatGoogleModel , chatMistralModel}
+const chatMistralModelMedium = new ChatMistralAI({
+    model: "mistral-medium-latest",
+    temperature: 0,
+});
+
+export {chatGoogleModel , chatMistralModelMedium , chatMistralModelSmall}
