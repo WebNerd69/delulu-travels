@@ -1,4 +1,4 @@
-import isTravelRelated from "@/app/services/ai/utils/promptClassifier";
+import isTravelRelated from "@/app/utils/promptClassifier";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

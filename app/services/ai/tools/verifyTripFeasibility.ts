@@ -1,7 +1,7 @@
 import { tool } from "langchain";
 import { z } from "zod";
 import { chatMistralModelMedium } from "../models";
-import tavilyClient from "@/lib/tavily";
+import tavilyClient from "@/app/lib/tavily";
 
 const responseSchema = z.object({
     feasible: z.boolean(),
