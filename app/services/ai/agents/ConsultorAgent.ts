@@ -1,6 +1,6 @@
-import { createAgent } from "langchain";
-import { z } from "zod";
+import { BaseMessage, createAgent } from "langchain";
 import verifyTripFeasibility from "../tools/verifyTripFeasibility";
+import { chatGoogleModel } from "../models";
 
 const specificInstructions = `You are TripMate, an AI Travel Consultant.
 
@@ -67,13 +67,23 @@ When all details are available, create a travel brief:
 Only then invoke the Mega Agent.`;
 
 const consultorAgent = createAgent({
-    model: "google-genai:gemini-2.5-flash-lite",
+    model: chatGoogleModel,
     tools: [verifyTripFeasibility],
     systemPrompt: specificInstructions,
 });
 
-const invokeConsultorAgent = async (prompt: string) => {
-    console.log(prompt);
+const invokeConsultorAgent = async (messages: BaseMessage[]) => {
+  try {
+    const response = await consultorAgent.invoke({
+      messages,
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Failed to invoke consultor agent:", error);
+
+    throw error;
+  }
 };
 
 export default invokeConsultorAgent;

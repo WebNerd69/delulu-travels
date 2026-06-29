@@ -2,24 +2,39 @@ import agentMemory from "@/app/lib/agentMemory";
 import { memoryType } from "@/app/types/Memory";
 
 const addToShortTermMemory = async ({ sessionId, role, userId, content }: memoryType) => {
-    await agentMemory.addSessionEvent({
-        sessionId,
-        role,
-        actorId: userId,
-        content,
-        createdAt: new Date,
-    });
+    try {
+        await agentMemory.addSessionEvent({
+            sessionId,
+            role,
+            actorId: userId,
+            content,
+            createdAt: new Date(),
+        });
 
-    const sessionMessages = await agentMemory.getSessionMemory(sessionId)
+        const sessionMessages = await agentMemory.getSessionMemory(sessionId);
 
-    return sessionMessages
+        return { success: true, response: sessionMessages , errors: null };
+    } catch (error) {
+        return { success: false, response: null , errors: error };
+    }
 };
 
+const getShortTermMemory = async (sessionId: string) => {
+    try {
+        const sessionMessages = await agentMemory.getSessionMemory(sessionId);
 
-const getShortTermMemory = async(sessionId:string)=>{
-     const sessionMessages = await agentMemory.getSessionMemory(sessionId)
+        return { success: true, response: sessionMessages , errors: null };
+    } catch (error) {
+        return { success: false, response: null , errors: error };
+    }
+};
 
-     return sessionMessages
-}
-
-export { addToShortTermMemory , getShortTermMemory}
+const deleteShortTermMemory = async (sessionId: string) => {
+    try {
+        await agentMemory.deleteSessionMemory(sessionId);
+        return { success: true, response: "done" , errors: null };
+    } catch (error) {
+        return { success: false, response: "not done" , errors: error };
+    }
+};
+export { addToShortTermMemory, getShortTermMemory, deleteShortTermMemory };
