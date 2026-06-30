@@ -1,6 +1,6 @@
 import { tool } from "langchain";
 import { z } from "zod";
-import { chatMistralModelMedium } from "../models";
+import { chatMistralModelMedium } from "../models/models";
 import tavilyClient from "@/app/lib/tavily";
 
 const responseSchema = z.object({

@@ -1,4 +1,4 @@
-import { chatGoogleModel, chatMistralModelSmall } from "./models";
+import { chatGoogleModel, chatMistralModelSmall } from "./models/models";
 
 const pingGoogle = async () => {
     const response = await chatGoogleModel.invoke("hii");
