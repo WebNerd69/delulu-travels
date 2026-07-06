@@ -2,7 +2,7 @@ import { tool } from "langchain";
 import axios from "axios";
 import { z } from "zod";
 import formatPrice from "../../../utils/formatPrice";
-import { Airline, AirportLocation, FlightDetail } from "@/app/types/Flights";
+import { Airline, AirportLocation, FlightDetail } from "@/app/types/flights.type";
 
 const headers = {
     "x-rapidapi-key": process.env.RAPIDAPI_API_KEY,

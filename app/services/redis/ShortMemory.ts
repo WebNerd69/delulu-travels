@@ -1,5 +1,5 @@
 import agentMemory from "@/app/lib/agentMemory";
-import { memoryType } from "@/app/types/Memory";
+import { memoryType } from "@/app/types/memory.type";
 
 const addToShortTermMemory = async ({ sessionId, role, userId, content }: memoryType) => {
     try {

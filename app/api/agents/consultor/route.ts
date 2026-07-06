@@ -7,6 +7,7 @@ export async function POST(req: Request) {
     try {
         const { msg } = await req.json();
 
+        // add to session memory to serve as agent memory
         const { success, response, errors } = await addToShortTermMemory({
             sessionId: "50824c61-10a2-4029-a53f-9b6caf408179",
             role: "USER",
@@ -17,16 +18,17 @@ export async function POST(req: Request) {
         if (response && success) {
             const messages = convertToAINativeText(response.events);
 
+            // get ai response
             const aiResponse = await invokeConsultorAgent(messages);
-            const { success, response:res , errors } = await addToShortTermMemory({
+            
+            // add ai response to session memory
+            await addToShortTermMemory({
                 sessionId: "50824c61-10a2-4029-a53f-9b6caf408179",
                 role: "ASSISTANT",
                 userId: "testUser1",
                 content: [{ text: JSON.stringify(aiResponse.messages.at(-1)?.content) }],
             });
-            if(success){
-               console.log(res)
-            }
+
             return NextResponse.json({ msg: aiResponse.messages.at(-1)?.content, status: 200 });
         } else {
             return NextResponse.json({
