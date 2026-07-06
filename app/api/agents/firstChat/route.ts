@@ -1,4 +1,4 @@
-import invokeConsultorAgent from "@/app/services/ai/agents/ConsultorAgent";
+import invokeConsultorAgent from "@/app/services/ai/agents/consultor.agent";
 import { addToShortTermMemory } from "@/app/services/redis/ShortMemory";
 import convertToAINativeText from "@/app/utils/convertToAINativeText";
 import { NextResponse } from "next/server";
@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     try {
         const { msg } = await req.json();
         const sesId = randomUUID();
-        setCookie("sessionId", sesId)
+        setCookie("sessionId", sesId);
 
         const { success, response, errors } = await addToShortTermMemory({
             sessionId: sesId,
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
             // convert the agentMemory to ai readable form
             const messages = convertToAINativeText(response.events);
 
-            const [ sessionNameRes, aiResponse ] = await Promise.all([
+            const [sessionNameRes, aiResponse] = await Promise.all([
                 nameChat(msg),
                 invokeConsultorAgent(messages),
             ]);
@@ -44,15 +44,15 @@ export async function POST(req: Request) {
             }
             return NextResponse.json({
                 msg: aiResponse.messages.at(-1)?.content,
-                sessionName:sessionNameRes.content,
-                sessionId:sesId,
+                sessionName: sessionNameRes.content,
+                sessionId: sesId,
                 status: 200,
             });
         } else {
             return NextResponse.json({
                 msg: `Some error occoured at our end : ${errors}`,
-                sessionId:sesId,
-                sessionName:"",
+                sessionId: sesId,
+                sessionName: "",
                 status: 500,
             });
         }
