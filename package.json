@@ -2,7 +2,7 @@
   "name": "delulu-travels",
   "version": "0.1.0",
   "private": true,
-  "type":"module",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -23,7 +23,10 @@
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "snoowrap": "^1.23.0",
+    "textrank": "^1.0.5",
+    "wink-bm25-text-search": "^3.1.2",
+    "wink-eng-lite-web-model": "^1.8.1",
+    "wink-nlp": "^2.4.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

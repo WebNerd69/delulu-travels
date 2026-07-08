@@ -2,6 +2,36 @@ import { tool } from "langchain";
 import { z } from "zod";
 import { chatMistralModelMedium } from "../models/models";
 import tavilyClient from "@/app/lib/tavily";
+import axios from "axios";
+import formatQuery from "@/app/utils/formatQuery";
+
+interface OrganicResult {
+    position: number;
+    title: string;
+    snippet: string;
+    link: string;
+    date?: string;
+}
+interface PeopleAlsoAsk {
+    question: string;
+    snippet: string;
+    title: string;
+    link: string;
+}
+
+interface SERPER_RESPONSE {
+    organic: OrganicResult[];
+    peopleAlsoAsk: PeopleAlsoAsk[];
+}
+
+interface Response {
+    title: string;
+    content: string;
+    link: string;
+    date: string;
+}
+
+let response: Response[];
 
 const responseSchema = z.object({
     feasible: z.boolean(),
@@ -15,9 +45,26 @@ const summarizer = chatMistralModelMedium.withStructuredOutput(responseSchema);
 
 const verifyTripFeasibility = tool(
     async ({ origin, destination, budgetPerPerson, travelers, duration }) => {
+        
         const searchQuery = `Is a ${duration} trip from ${origin} to ${destination} for ${travelers} people with a budget of ₹${budgetPerPerson} per person feasible? Include flights, accommodation, food, transport and visa costs.`;
 
-        const { results } = await tavilyClient.search(searchQuery);
+        const q = formatQuery(searchQuery);
+        const url = `https://google.serper.dev/search?q=${q}&apiKey=${process.env.SERPER_API_KEY}`;
+        const { data } = await axios.get<SERPER_RESPONSE>(url);
+
+        response = data?.organic?.map((item) => ({
+            title: item.title,
+            content: item.snippet,
+            link: item.link ?? "",
+            date: item.date ?? "",
+        }));
+
+        response = data?.peopleAlsoAsk?.map((item) => ({
+            title: item.question,
+            content: item.snippet,
+            link: "",
+            date: "",
+        }));
 
         const analysis = await summarizer.invoke(`
                Analyze the following travel search results.
@@ -36,7 +83,7 @@ const verifyTripFeasibility = tool(
                )}
 
                Search Results:
-               ${JSON.stringify(results, null, 2)}
+               ${JSON.stringify(response, null, 2)}
 
                Rules:
                - Ignore ads and irrelevant results.

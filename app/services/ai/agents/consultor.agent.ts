@@ -1,5 +1,5 @@
 import { BaseMessage, createAgent } from "langchain";
-import verifyTripFeasibility from "../tools/verifyTripFeasibility";
+import verifyTripFeasibility from "../tools/verifyTripFeasibility.tool";
 import { chatGoogleModel } from "../models/models";
 
 const specificInstructions = `You are TripMate, a friendly, knowledgeable, and professional AI Travel Consultant.
