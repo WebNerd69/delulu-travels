@@ -1,4 +1,4 @@
-import searchWeb from "@/app/services/ai/lib/searchWeb";
+import searchWeb from "@/app/services/ai/lib/web/searchWeb";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

@@ -1,7 +1,5 @@
-import { z } from "zod";
 import axios from "axios";
 import formatQuery from "@/app/utils/formatQuery";
-import { error } from "console";
 
 interface OrganicResult {
     position: number;

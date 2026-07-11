@@ -1,7 +1,7 @@
 import { tool } from "langchain";
 import { z } from "zod";
 import { chatMistralModelMedium } from "../models/models";
-import tavilyClient from "@/app/lib/tavily";
+import tavilyClient from "@/app/lib/tavily/tavily";
 import axios from "axios";
 import formatQuery from "@/app/utils/formatQuery";
 
