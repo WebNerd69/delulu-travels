@@ -1,4 +1,4 @@
-import extract from "@/app/services/ai/lib/web/extractWeb";
+import extract from "@/app/lib/web/extractWeb";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Response) {

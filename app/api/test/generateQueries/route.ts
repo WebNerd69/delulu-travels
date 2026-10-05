@@ -13,12 +13,12 @@ export async function POST(req: Request) {
             duration: msg.duration,
         });
         if (status === 200) {
-            return NextResponse.json({ res, status });
+            return NextResponse.json({ res, status , error });
         } else if (status === 500) {
             throw error;
         }
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ res: "There is an err at our side...", status: 500 });
+        return NextResponse.json({ res: "There is an err at our side...", status: 500 , error });
     }
 }

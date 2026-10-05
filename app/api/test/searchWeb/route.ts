@@ -1,10 +1,10 @@
-import searchWeb from "@/app/services/ai/lib/web/searchWeb";
+import searchWeb from "@/app/lib/web/searchWeb";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
         const { query } = await req.json();
-        const {status , res , error} = await searchWeb(query);
+        const { status, res, error } = await searchWeb(query);
         if (status === 500) {
             throw error;
         }

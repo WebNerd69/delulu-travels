@@ -1,31 +1,39 @@
-import { RankedDocument, SearchDocument } from "./document.type";
 import buildMiniSearch from "./minisearch.config";
-import { SearchResult } from "minisearch";
+import { RankedDocument, SearchDocument } from "./document.type";
 
-type MiniSearchResult = SearchResult & SearchDocument;
+const rankContent = (documents: SearchDocument[]): RankedDocument[] => {
+    return documents.map((document) => {
+        const miniSearch = buildMiniSearch(document);
 
-const rankContent = (query: string, docs: SearchDocument[]): RankedDocument[] => {
-    const miniSearch = buildMiniSearch(docs);
+        const rankedSections = miniSearch
+            .search(document.query, {
+                boost: {
+                    heading: 5,
+                    content: 3,
+                },
 
-    const results = miniSearch.search(query, {
-        boost: {
-            title: 2,
-            content: 5,
-        },
-        prefix: true,
-        fuzzy: 0.2,
+                prefix: true,
+
+                fuzzy: 0.15,
+
+                combineWith: "OR",
+            })
+            .map((result) => ({
+                heading: result.heading as string,
+                level: result.level as number,
+                content: result.content as string,
+                score: result.score*.6 + document.score*.4,
+            }))
+            .sort((a, b) => b.score - a.score);
+
+        return {
+            id: document.id,
+            query: document.query,
+            link: document.link,
+            score: document.score,
+            content: rankedSections,
+        };
     });
-
-    return results
-        .map((result) => {
-            const doc = result as MiniSearchResult;
-
-            return {
-                ...doc,
-                score: doc.score + Math.max(0, 11 - doc.position),
-            };
-        })
-        .sort((a, b) => b.score - a.score);
 };
 
 export default rankContent;

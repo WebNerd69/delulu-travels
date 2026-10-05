@@ -72,7 +72,6 @@ const createSearchQueries = async ({
     travelMode,
     duration,
 }: SearchQueryInputtype) => {
-
     let input = `destination: ${destination}`;
     try {
         if (origin) input += `\nOrigin: ${origin}`;
@@ -80,10 +79,17 @@ const createSearchQueries = async ({
         if (travelMode) input += `\nTravel Mode: ${travelMode}`;
         if (duration) input += `\nDuration: ${duration}`;
 
-        const res = await queryBuilderAgent.invoke(specificInstructions + input);
-        return { res, status: 200 , error:null };
+        const raw = await queryBuilderAgent.invoke([
+            { role: "system", content: specificInstructions },
+            { role: "user", content: input },
+        ]);
+        if (!raw) {
+            return { res: null, status: 500, error: "Theres a problem at our end" };
+        }
+        const queries = raw?.queries;
+        return { res: queries, status: 200, error: null };
     } catch (error) {
-        return { res: null, status: 500 , error };
+        return { res: null, status: 500, error };
     }
 };
 

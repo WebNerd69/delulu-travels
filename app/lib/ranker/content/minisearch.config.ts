@@ -1,15 +1,28 @@
 import MiniSearch from "minisearch";
-import { SearchDocument } from "./document.type";
+import { SearchDocument, SearchChunk } from "./document.type";
 
-function buildMiniSearch(docs: SearchDocument[]) {
-    const miniSearch = new MiniSearch<SearchDocument>({
-        fields: ["title", "content"],
-        storeFields: ["title", "content", "link"],
+const buildMiniSearch = (document: SearchDocument) => {
+    const miniSearch = new MiniSearch<SearchChunk>({
+        fields: ["heading", "content"],
+
+        storeFields: [
+            "heading",
+            "level",
+            "content",
+        ],
     });
 
-    miniSearch.addAll(docs);
+    miniSearch.addAll(
+        document.content.map((section, index) => ({
+            id: `${index}`,
+            heading: section.heading,
+            level: section.level,
+            content: section.content,
+            score:0
+        }))
+    );
 
     return miniSearch;
-}
+};
 
 export default buildMiniSearch;

@@ -21,6 +21,7 @@ interface SERPER_RESPONSE {
 }
 
 interface Response {
+    id: string;
     title: string;
     content: string;
     link: string;
@@ -53,20 +54,24 @@ const searchWeb = async (query: string) => {
 
         const { data } = await axios.get<SERPER_RESPONSE>(url);
 
-        org = data?.organic
-            .filter(
-                (item) => !blockedDomains.some((domain) => item.link.includes(domain)),
-            )
-            .map((item , index) => ({
-                title: item.title,
-                content: item.snippet,
-                link: item.link ?? "",
-                date: item.date ?? "",
-                position: index,
-            })) ?? [];
+        org =
+            data?.organic
+                .filter(
+                    (item) =>
+                        !blockedDomains.some((domain) => item.link.includes(domain)),
+                )
+                .map((item, index) => ({
+                    id: `${query.replace(" ", "").slice(0, 10).toLowerCase() + `${index}`}`,
+                    title: item.title,
+                    content: item.snippet,
+                    link: item.link ?? "",
+                    date: item.date ?? "",
+                    position: index,
+                })) ?? [];
 
         paa =
-            data?.peopleAlsoAsk?.map((item) => ({
+            data?.peopleAlsoAsk?.map((item, index) => ({
+                id: `${query.replace(" ", "").slice(0, 10).toLowerCase() + `${index}`}`,
                 title: item.question,
                 content: item.snippet,
                 link: "",
