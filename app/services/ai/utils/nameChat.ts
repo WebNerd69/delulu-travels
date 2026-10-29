@@ -1,9 +1,4 @@
-import { ChatMistralAI } from "@langchain/mistralai";
-
-const model = new ChatMistralAI({
-    model: "mistral-small-latest",
-    temperature: 0.3,
-});
+import { chatGoogleModel_31 } from "../models/models";
 
 const specificInstructions = `You are a travel chat title generator.
 
@@ -25,7 +20,7 @@ Ladakh Road Trip
 Europe Budget Tour`;
 
 const nameChat = async (prompt: string) => {
-    const res = await model.invoke(`${specificInstructions} prompt: ${prompt}`);
+    const res = await chatGoogleModel_31.invoke(`${specificInstructions} prompt: ${prompt}`);
     return res;
 };
 

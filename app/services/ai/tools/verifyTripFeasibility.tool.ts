@@ -1,6 +1,6 @@
 import { tool } from "langchain";
 import { z } from "zod";
-import { chatMistralModelMedium } from "../models/models";
+import { chatGoogleModel_31 } from "../models/models";
 import tavilyClient from "@/app/lib/tavily/tavily";
 import axios from "axios";
 import formatQuery from "@/app/utils/formatQuery";
@@ -41,7 +41,7 @@ const responseSchema = z.object({
     confidence: z.enum(["low", "medium", "high"]),
 });
 
-const summarizer = chatMistralModelMedium.withStructuredOutput(responseSchema);
+const summarizer = chatGoogleModel_31.withStructuredOutput(responseSchema);
 
 const verifyTripFeasibility = tool(
     async ({ origin, destination, budgetPerPerson, travelers, duration }) => {

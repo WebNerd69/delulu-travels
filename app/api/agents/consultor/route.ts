@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
         // add to session memory to serve as agent memory
         const { success, response, errors } = await addToShortTermMemory({
-            sessionId: "50824c61-10a2-4029-a53f-9b6caf408179",
+            sessionId: "45a07c0c-2071-4d2a-a9dd-df94e2e27464",
             role: "USER",
             userId: "testUser1",
             content: [{ text: msg }],

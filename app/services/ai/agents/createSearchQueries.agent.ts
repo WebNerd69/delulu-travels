@@ -1,5 +1,5 @@
 import { SearchQueryInputtype, SearchQueriesSchema } from "@/app/types/searchQuery.type";
-import { chatMistralModelMedium } from "../models/models";
+import { chatGoogleModel_31 } from "../models/models";
 
 const specificInstructions = `You are a Travel Search Planner.
 
@@ -63,7 +63,7 @@ Return ONLY:
 }`;
 
 const queryBuilderAgent =
-    chatMistralModelMedium.withStructuredOutput(SearchQueriesSchema);
+    chatGoogleModel_31.withStructuredOutput(SearchQueriesSchema);
 
 const createSearchQueries = async ({
     destination,

@@ -1,4 +1,4 @@
-import nameChat from "@/app/utils/nameChat";
+import nameChat from "@/app/services/ai/utils/nameChat";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

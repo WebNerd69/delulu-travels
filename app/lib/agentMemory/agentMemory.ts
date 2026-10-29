@@ -1,8 +1,8 @@
 import { AgentMemory } from "@redis-iris/agent-memory";
 
 const agentMemory = new AgentMemory({
-    serverURL: "https://gcp-us-east4.memory.redis.io",
-    storeId: "70feeebafbeb404d915fb56d700058e7",
+    serverURL: "https://aws-us-east-1.memory.redis.io",
+    storeId: "c3f6e0a2936f4070b8f3cd22c886b463",
     apiKey: process.env.REDIS_AGENT_MEMORY_API_KEY,
 });
 

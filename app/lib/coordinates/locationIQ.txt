@@ -1,0 +1,1 @@
+https://us1.locationiq.com/v1/search/structured?city=Coochbehar&county=West+bengal&state=West+bengal&country=India&key=

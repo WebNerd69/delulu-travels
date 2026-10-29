@@ -3,7 +3,7 @@ import { addToShortTermMemory } from "@/app/services/redis/ShortMemory";
 import convertToAINativeText from "@/app/utils/convertToAINativeText";
 import { NextResponse } from "next/server";
 import { randomUUID } from "crypto";
-import nameChat from "@/app/utils/nameChat";
+import nameChat from "@/app/services/ai/utils/nameChat";
 import setCookie from "@/app/services/cookies/setCookies";
 
 export async function POST(req: Request) {

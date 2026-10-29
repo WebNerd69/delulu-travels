@@ -1,0 +1,1 @@
+https://api.geoapify.com/v1/geocode/search?text=kasol&format=json&apiKey=
