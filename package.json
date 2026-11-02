@@ -28,6 +28,7 @@
     "remark": "^15.0.1",
     "remark-parse": "^11.0.0",
     "remark-stringify": "^11.0.0",
+    "simple-statistics": "^8.0.0",
     "textrank": "^1.0.5",
     "unist-util-visit": "^5.1.0",
     "zod": "^4.4.3"

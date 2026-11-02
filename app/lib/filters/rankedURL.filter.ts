@@ -1,9 +1,10 @@
 import { z } from "zod";
 import { RankedDocument } from "../ranker/url/document.type";
+import lowerBoundValue from "../../utils/lowerBoundValue.js";
 
-interface document{
-     query: string,
-     urls: RankedDocument[]
+interface Document {
+    query: string;
+    urls: RankedDocument[];
 }
 
 const filtered = z.object({
@@ -13,19 +14,21 @@ const filtered = z.object({
 
 type FILTERED = z.infer<typeof filtered>;
 
-let filteredUrls: FILTERED[] = [];
+const filterUrls = (documents: Document[]): FILTERED[] => {
+    return documents.map((doc) => {
+        const scoreArray = doc.urls.map((item) => item.score);
 
-const filterUrls = (documents: document[]) => {
-    documents.map((doc) => {
-        const urls = doc.urls.filter((item) => item.score >= 70).map((item) => item.link);
+        const minScore = scoreArray.length ? lowerBoundValue(scoreArray) : Infinity;
 
-        filteredUrls.push({
+        const urls = doc.urls
+            .filter((item) => item.score >= minScore)
+            .map((item) => item.link);
+
+        return {
             query: doc.query,
-            urls: urls,
-        });
+            urls,
+        };
     });
-
-    return filteredUrls;
 };
 
 export default filterUrls;

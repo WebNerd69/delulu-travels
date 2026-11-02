@@ -5,7 +5,9 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
     try {
         const { query, docs } = await req.json();
+        // console.log(query , docs)
         const res = rankURLs(query, docs);
+        // console.log("rankURL res" ,res)
         const documents = [{query: query , urls: res}]
         const response = filterUrls(documents)
         return NextResponse.json({ res: response, error: null, status: 200 });

@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "test.js"  ],
+, "test.js", "app/utils/chooseBoundMethod.js"  ],
   "exclude": ["node_modules"]
 }
