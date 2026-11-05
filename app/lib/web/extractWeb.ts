@@ -22,7 +22,8 @@ const extract = async (p: PARAMS) => {
         res = results.map((item, index) => ({
             id: JSON.stringify(index),
             title: item.title,
-            content: cleanMarkdown(item.rawContent),
+            content: cleanMarkdown(item.rawContent).filteredSections,
+            mergedContent: cleanMarkdown(item.rawContent).mergedContent,
             link: item.url,
         }));
         return { success: true, res, error: null };

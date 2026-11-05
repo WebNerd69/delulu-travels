@@ -8,6 +8,7 @@ import mergeParagraphs from "./mergeParagraphs";
 import preCleanMarkdown from "./preClean";
 import chunkByHeading from "./chunkByHeading";
 import filterSections from "./filterSections";
+import mergeFilteredSections from "./mergeFilteredSections";
 
 const cleanMarkdown = (markdown: string) => {
     const preCleaned = preCleanMarkdown(markdown);
@@ -19,10 +20,10 @@ const cleanMarkdown = (markdown: string) => {
     removeEmptyNodes(tree);
     mergeParagraphs(tree);
     remark().use(remarkStringify).stringify(tree);
-
     const sections = chunkByHeading(tree);
     const filteredSections = filterSections(sections);
-    return filteredSections;
+    const mergedContent = mergeFilteredSections(sections);
+    return {filteredSections , mergedContent};
 };
 
 export default cleanMarkdown;

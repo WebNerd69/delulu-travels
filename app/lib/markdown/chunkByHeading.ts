@@ -52,7 +52,6 @@ const chunkByHeading = (tree: Root): MarkdownSection[] => {
         current.content = current.content.trim();
         sections.push(current);
     }
-
     return sections;
 };
 

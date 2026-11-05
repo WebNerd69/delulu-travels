@@ -14,9 +14,8 @@ const filtered = z.object({
 
 type FILTERED = z.infer<typeof filtered>;
 
-let filteredContent: FILTERED[] = [];
-
 const rankedContentFilter = (documents: SearchDocument[]) => {
+    let filteredContent: FILTERED[] = [];
     documents.map((doc) => {
         if (doc.content.length <= 5) {
             filteredContent.push({
@@ -25,6 +24,7 @@ const rankedContentFilter = (documents: SearchDocument[]) => {
                 content: doc.content.map((chunk) => ({
                     heading: chunk.heading,
                     content: chunk.content,
+                    score: chunk.score,
                 })),
             });
         } else {
@@ -36,11 +36,12 @@ const rankedContentFilter = (documents: SearchDocument[]) => {
                     .map((chunk) => ({
                         heading: chunk.heading,
                         content: chunk.content,
+                        score: chunk.score,
                     })),
             });
         }
     });
-    return filteredContent
+    return filteredContent;
 };
 
 export default rankedContentFilter;

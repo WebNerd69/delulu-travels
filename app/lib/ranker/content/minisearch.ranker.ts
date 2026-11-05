@@ -18,12 +18,14 @@ const rankContent = (documents: SearchDocument[]): RankedDocument[] => {
 
                 combineWith: "OR",
             })
-            .map((result) => ({
-                heading: result.heading as string,
-                level: result.level as number,
-                content: result.content as string,
-                score: result.score*.6 + document.score*.4,
-            }))
+            .map((result) => {
+                return {
+                    heading: result.heading as string,
+                    level: result.level as number,
+                    content: result.content as string,
+                    score: result.score * 0.6 + document.score * 0.4,
+                };
+            })
             .sort((a, b) => b.score - a.score);
 
         return {
